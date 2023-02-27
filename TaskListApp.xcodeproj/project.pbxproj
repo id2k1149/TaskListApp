@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		50ED2C5629ACFE0B00D4CA24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2C5529ACFE0B00D4CA24 /* AppDelegate.swift */; };
 		50ED2C5829ACFE0B00D4CA24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2C5729ACFE0B00D4CA24 /* SceneDelegate.swift */; };
-		50ED2C5A29ACFE0B00D4CA24 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2C5929ACFE0B00D4CA24 /* ViewController.swift */; };
+		50ED2C5A29ACFE0B00D4CA24 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2C5929ACFE0B00D4CA24 /* TaskListViewController.swift */; };
 		50ED2C6029ACFE0B00D4CA24 /* TaskListApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2C5E29ACFE0B00D4CA24 /* TaskListApp.xcdatamodeld */; };
 		50ED2C6229ACFE0D00D4CA24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50ED2C6129ACFE0D00D4CA24 /* Assets.xcassets */; };
 		50ED2C6529ACFE0D00D4CA24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50ED2C6329ACFE0D00D4CA24 /* LaunchScreen.storyboard */; };
@@ -19,7 +19,7 @@
 		50ED2C5229ACFE0B00D4CA24 /* TaskListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ED2C5529ACFE0B00D4CA24 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50ED2C5729ACFE0B00D4CA24 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		50ED2C5929ACFE0B00D4CA24 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		50ED2C5929ACFE0B00D4CA24 /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		50ED2C5F29ACFE0B00D4CA24 /* TaskListApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskListApp.xcdatamodel; sourceTree = "<group>"; };
 		50ED2C6129ACFE0D00D4CA24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50ED2C6429ACFE0D00D4CA24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 			children = (
 				50ED2C5529ACFE0B00D4CA24 /* AppDelegate.swift */,
 				50ED2C5729ACFE0B00D4CA24 /* SceneDelegate.swift */,
-				50ED2C5929ACFE0B00D4CA24 /* ViewController.swift */,
+				50ED2C5929ACFE0B00D4CA24 /* TaskListViewController.swift */,
 				50ED2C6129ACFE0D00D4CA24 /* Assets.xcassets */,
 				50ED2C6329ACFE0D00D4CA24 /* LaunchScreen.storyboard */,
 				50ED2C6629ACFE0D00D4CA24 /* Info.plist */,
@@ -138,7 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50ED2C6029ACFE0B00D4CA24 /* TaskListApp.xcdatamodeld in Sources */,
-				50ED2C5A29ACFE0B00D4CA24 /* ViewController.swift in Sources */,
+				50ED2C5A29ACFE0B00D4CA24 /* TaskListViewController.swift in Sources */,
 				50ED2C5629ACFE0B00D4CA24 /* AppDelegate.swift in Sources */,
 				50ED2C5829ACFE0B00D4CA24 /* SceneDelegate.swift in Sources */,
 			);
