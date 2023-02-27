@@ -36,12 +36,28 @@ class TaskViewController: UIViewController {
         })
     }()
     
+    private lazy var cancelButton: UIButton = {
+        var attributes = AttributeContainer()
+        attributes.font = UIFont.boldSystemFont(ofSize: 18)
+        
+        var buttonConfiguration = UIButton.Configuration.filled()
+        buttonConfiguration.attributedTitle = AttributedString("Cancel",
+                                                               attributes: attributes)
+        buttonConfiguration.baseBackgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+        
+        return UIButton(configuration: buttonConfiguration,
+                        primaryAction: UIAction { [unowned self] _ in
+            dismiss(animated: true)
+        })
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupSubviews(
             taskTextField,
-            saveButton
+            saveButton,
+            cancelButton
         )
         setConstraints()
     }
@@ -67,6 +83,14 @@ class TaskViewController: UIViewController {
             saveButton.topAnchor.constraint(equalTo: taskTextField.bottomAnchor, constant: 20),
             saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+        ])
+        
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            cancelButton.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 20),
+            cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
         ])
         
     }
