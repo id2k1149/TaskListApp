@@ -16,10 +16,23 @@ class TaskViewController: UIViewController {
         return textField
     }()
     
+    private lazy var saveButton: UIButton = {
+        var buttonConfiguration = UIButton.Configuration.filled()
+        buttonConfiguration.buttonSize = .medium // default value
+        buttonConfiguration.title = "Save Task"
+        return UIButton(configuration: buttonConfiguration,
+                        primaryAction: UIAction { [unowned self] _ in
+            dismiss(animated: true)
+        })
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupSubviews(taskTextField)
+        setupSubviews(
+            taskTextField,
+            saveButton
+        )
         setConstraints()
     }
     
@@ -36,6 +49,14 @@ class TaskViewController: UIViewController {
             taskTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
             taskTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             taskTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+        ])
+        
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            saveButton.topAnchor.constraint(equalTo: taskTextField.bottomAnchor, constant: 20),
+            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
         ])
         
     }
