@@ -17,38 +17,22 @@ class TaskViewController: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        var attributes = AttributeContainer()
-        attributes.font = UIFont.boldSystemFont(ofSize: 18)
-        
-        var buttonConfiguration = UIButton.Configuration.filled()
-        buttonConfiguration.attributedTitle = AttributedString("Save Task",
-                                                               attributes: attributes)
-        buttonConfiguration.baseBackgroundColor = UIColor(
-            red: 21/255,
-            green: 101/255,
-            blue: 192/255,
-            alpha: 194/255
-        )
-        
-        return UIButton(configuration: buttonConfiguration,
-                        primaryAction: UIAction { [unowned self] _ in
-            dismiss(animated: true)
-        })
+        createButton(withTitle: "Save Task",
+                     andColor: UIColor(red: 21/255,
+                                       green: 101/255,
+                                       blue: 192/255,
+                                       alpha: 194/255),
+                     action: UIAction { [unowned self] _ in
+                        dismiss(animated: true) }
+                     )
     }()
     
     private lazy var cancelButton: UIButton = {
-        var attributes = AttributeContainer()
-        attributes.font = UIFont.boldSystemFont(ofSize: 18)
-        
-        var buttonConfiguration = UIButton.Configuration.filled()
-        buttonConfiguration.attributedTitle = AttributedString("Cancel",
-                                                               attributes: attributes)
-        buttonConfiguration.baseBackgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
-        
-        return UIButton(configuration: buttonConfiguration,
-                        primaryAction: UIAction { [unowned self] _ in
-            dismiss(animated: true)
-        })
+        createButton(withTitle: "Cancel",
+                     andColor: .orange,
+                     action: UIAction { [unowned self] _ in
+                        dismiss(animated: true) }
+                     )
     }()
     
     override func viewDidLoad() {
@@ -92,6 +76,22 @@ class TaskViewController: UIViewController {
             cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
         ])
+        
+    }
+    
+    private func createButton(withTitle title: String,
+                              andColor color: UIColor,
+                              action: UIAction) -> UIButton {
+        var attributes = AttributeContainer()
+        attributes.font = UIFont.boldSystemFont(ofSize: 18)
+        
+        var buttonConfiguration = UIButton.Configuration.filled()
+        buttonConfiguration.attributedTitle = AttributedString(title,
+                                                               attributes: attributes)
+        buttonConfiguration.baseBackgroundColor = color
+        
+        return UIButton(configuration: buttonConfiguration,
+                        primaryAction: action)
         
     }
 }
