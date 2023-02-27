@@ -17,9 +17,19 @@ class TaskViewController: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
+        var attributes = AttributeContainer()
+        attributes.font = UIFont.boldSystemFont(ofSize: 18)
+        
         var buttonConfiguration = UIButton.Configuration.filled()
-        buttonConfiguration.buttonSize = .medium // default value
-        buttonConfiguration.title = "Save Task"
+        buttonConfiguration.attributedTitle = AttributedString("Save Task",
+                                                               attributes: attributes)
+        buttonConfiguration.baseBackgroundColor = UIColor(
+            red: 21/255,
+            green: 101/255,
+            blue: 192/255,
+            alpha: 194/255
+        )
+        
         return UIButton(configuration: buttonConfiguration,
                         primaryAction: UIAction { [unowned self] _ in
             dismiss(animated: true)
