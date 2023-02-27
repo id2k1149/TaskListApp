@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import CoreData
 
 class TaskViewController: UIViewController {
+    
+    private var viewContext = (UIApplication.shared.delegate as! AppDelegate)
+        .persistentContainer
+        .viewContext
     
     private lazy var taskTextField: UITextField = {
         let textField = UITextField()
@@ -23,7 +28,7 @@ class TaskViewController: UIViewController {
                                        blue: 192/255,
                                        alpha: 194/255),
                      action: UIAction { [unowned self] _ in
-                        dismiss(animated: true) }
+                        save() }
                      )
     }()
     
@@ -93,5 +98,20 @@ class TaskViewController: UIViewController {
         return UIButton(configuration: buttonConfiguration,
                         primaryAction: action)
         
+    }
+    
+    private func save() {
+        let task = Task(context: viewContext)
+        task.title = taskTextField.text
+        
+        if viewContext.hasChanges {
+            do {
+                try viewContext.save()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        dismiss(animated: true)
     }
 }
