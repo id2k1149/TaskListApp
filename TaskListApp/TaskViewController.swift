@@ -8,12 +8,17 @@
 import UIKit
 
 class TaskViewController: UIViewController {
+    
+    private lazy var taskTextField: UITextField = {
+        let textField = UITextField()
+        textField.borderStyle = .roundedRect
+        textField.placeholder = "New Task"
+        return textField
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-
+        view.addSubview(taskTextField)
     }
-    
 }
