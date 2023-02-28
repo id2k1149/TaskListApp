@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol TaskViewControllerDelegate {
+    func reloadData()
+}
+
 class TaskListViewController: UITableViewController {
     
     private var viewContext = (UIApplication.shared.delegate as! AppDelegate)
@@ -53,6 +57,8 @@ class TaskListViewController: UITableViewController {
     
     @objc private func addNewTask() {
         let taskVC = TaskViewController()
+//        taskVC.modalPresentationStyle = .fullScreen
+        taskVC.delegate = self
         present(taskVC, animated: true)
         
     }
@@ -82,4 +88,12 @@ extension TaskListViewController {
         cell.contentConfiguration = content
         return cell
     }
+}
+
+extension TaskListViewController: TaskViewControllerDelegate {
+    func reloadData() {
+        fetchData()
+        tableView.reloadData()
+    }
+    
 }

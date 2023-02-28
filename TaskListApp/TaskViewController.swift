@@ -10,6 +10,8 @@ import CoreData
 
 class TaskViewController: UIViewController {
     
+    var delegate: TaskViewControllerDelegate!
+    
     private var viewContext = (UIApplication.shared.delegate as! AppDelegate)
         .persistentContainer
         .viewContext
@@ -112,6 +114,7 @@ class TaskViewController: UIViewController {
             }
         }
         
+        delegate.reloadData()
         dismiss(animated: true)
     }
 }
