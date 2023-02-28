@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol TaskViewControllerDelegate {
-    func reloadData()
-}
-
 class TaskListViewController: UITableViewController {
     
     private var viewContext = (UIApplication.shared.delegate as! AppDelegate)
@@ -56,15 +52,8 @@ class TaskListViewController: UITableViewController {
     }
     
     @objc private func addNewTask() {
-        /*
-        let taskVC = TaskViewController()
-//        taskVC.modalPresentationStyle = .fullScreen
-        taskVC.delegate = self
-        present(taskVC, animated: true)
-         */
         showAlert(withTitle: "New Task",
                   andMessage: "What do you want to do?")
-        
     }
     
     private func fetchData() {
@@ -101,11 +90,22 @@ class TaskListViewController: UITableViewController {
     }
     
     private func save(_ taskName: String) {
+        let task = Task(context: viewContext)
+        task.title = taskName
+        taskList.append(task)
         
+        let cellIndex = IndexPath(row: taskList.count - 1, section: 0)
+        
+        tableView.insertRows(at: [cellIndex], with: .automatic)
+        
+        if viewContext.hasChanges {
+            do {
+                try viewContext.save()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
     }
-    
-    
-    
 }
 
 extension TaskListViewController {
@@ -121,12 +121,4 @@ extension TaskListViewController {
         cell.contentConfiguration = content
         return cell
     }
-}
-
-extension TaskListViewController: TaskViewControllerDelegate {
-    func reloadData() {
-        fetchData()
-        tableView.reloadData()
-    }
-    
 }
