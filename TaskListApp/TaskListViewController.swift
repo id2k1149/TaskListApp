@@ -9,6 +9,10 @@ import UIKit
 
 class TaskListViewController: UITableViewController {
     
+    private var viewContext = (UIApplication.shared.delegate as! AppDelegate)
+        .persistentContainer
+        .viewContext
+    
     private let cellID = "task"
     private var taskList: [Task] = []
     
@@ -17,6 +21,7 @@ class TaskListViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         view.backgroundColor = .white
         setupNavigationBar()
+        fetchData()
     }
     
     private func setupNavigationBar() {
@@ -51,6 +56,17 @@ class TaskListViewController: UITableViewController {
         present(taskVC, animated: true)
         
     }
+    
+    private func fetchData() {
+        let fetchRequest = Task.fetchRequest()
+        
+        do {
+            taskList = try viewContext.fetch(fetchRequest)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
 }
 
 extension TaskListViewController {
