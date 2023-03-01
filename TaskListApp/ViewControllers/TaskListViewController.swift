@@ -50,6 +50,9 @@ class TaskListViewController: UITableViewController {
         )
         
         navigationController?.navigationBar.tintColor = .white
+        
+        navigationItem.leftBarButtonItem = editButtonItem
+        editButtonItem.title = "Delete"
     }
     
     @objc private func addNewTask() {
@@ -185,5 +188,4 @@ extension TaskListViewController {
                   forRowAt: indexPath.row)
         
     }
-
 }
