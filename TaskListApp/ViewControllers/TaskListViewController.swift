@@ -25,6 +25,15 @@ class TaskListViewController: UITableViewController {
         fetchData()
     }
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        if editing {
+            navigationItem.leftBarButtonItem?.title = "Done"
+        } else {
+            navigationItem.leftBarButtonItem?.title = "Delete"
+        }
+    }
+    
     private func setupNavigationBar() {
         title = "Task List"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -66,6 +75,7 @@ class TaskListViewController: UITableViewController {
         
         do {
             taskList = try viewContext.fetch(fetchRequest)
+            setupNavigationBar()
         } catch {
             print(error.localizedDescription)
         }
@@ -96,21 +106,12 @@ class TaskListViewController: UITableViewController {
                 textField.text = taskToEdit.title
             }
             
-            let saveAction = UIAlertAction(title: "Save",
+            let updateAction = UIAlertAction(title: "Update",
                                            style: .default) { [unowned self] _ in
-                guard let updatedTaskTitle = alert.textFields?.first?.text, !updatedTaskTitle.isEmpty else { return }
-                
-                // Update the task name with new input
-                taskToEdit.title = updatedTaskTitle
-                
-                // Update the row in the table view
-                let cellIndex = IndexPath(row: row, section: 0)
-                tableView.reloadRows(at: [cellIndex], with: .automatic)
-                
-                // Save the changes to Core Data
-                StorageManager.shared.saveContext()
+                guard let task = alert.textFields?.first?.text, !task.isEmpty else { return }
+                update(task, forRowAt: row)
             }
-            alert.addAction(saveAction)
+            alert.addAction(updateAction)
             
         }
         
@@ -127,7 +128,6 @@ class TaskListViewController: UITableViewController {
         taskList.append(task)
         
         let cellIndex = IndexPath(row: taskList.count - 1, section: 0)
-        
         tableView.insertRows(at: [cellIndex], with: .automatic)
         
         if viewContext.hasChanges {
@@ -137,6 +137,19 @@ class TaskListViewController: UITableViewController {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func update(_ taskName: String, forRowAt row: Int) {
+        let taskToEdit = taskList[row]
+        // Update the task name with new input
+        taskToEdit.title = taskName
+        
+        // Update the row in the table view
+        let cellIndex = IndexPath(row: row, section: 0)
+        tableView.reloadRows(at: [cellIndex], with: .automatic)
+        
+        // Save the changes to Core Data
+        StorageManager.shared.saveContext()
     }
 }
 
