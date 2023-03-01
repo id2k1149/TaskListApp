@@ -27,6 +27,7 @@ class TaskListViewController: UITableViewController {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        
         if editing {
             navigationItem.leftBarButtonItem?.title = "Done"
         } else {
@@ -196,7 +197,7 @@ extension TaskListViewController {
         // Deselect the row that was tapped
         tableView.deselectRow(at: indexPath, animated: true)
         
-        showAlert(withTitle: "Edit Task",
+        showAlert(withTitle: "Update Task",
                   andMessage: "",
                   forRowAt: indexPath.row)
         
