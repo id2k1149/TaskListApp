@@ -110,16 +110,38 @@ class TaskListViewController: UITableViewController {
 }
 
 extension TaskListViewController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView,
+                            numberOfRowsInSection section: Int) -> Int {
         taskList.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         let task = taskList[indexPath.row]
         var content = cell.defaultContentConfiguration()
         content.text = task.title
         cell.contentConfiguration = content
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCell.EditingStyle,
+                            forRowAt indexPath: IndexPath) {
+        
+        // Check if the editing style is delete
+        if editingStyle == .delete {
+            
+            // Delete the task from CoreData
+            let taskToDelete = taskList[indexPath.row]
+            StorageManager.shared.deleteTask(taskToDelete)
+            
+            // Remove the task from the array
+            taskList.remove(at: indexPath.row)
+            
+            // Delete the task from the table view
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+        }
     }
 }
