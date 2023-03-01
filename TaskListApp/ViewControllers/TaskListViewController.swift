@@ -55,7 +55,7 @@ class TaskListViewController: UITableViewController {
     @objc private func addNewTask() {
         showAlert(withTitle: "New Task",
                   andMessage: "What do you want to do?",
-                  forRowAt: taskList.count - 1)
+                  forRowAt: 0)
     }
     
     private func fetchData() {
