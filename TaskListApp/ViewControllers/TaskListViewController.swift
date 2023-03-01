@@ -95,11 +95,10 @@ class TaskListViewController: UITableViewController {
             
             let saveAction = UIAlertAction(title: "Save",
                                            style: .default) { [unowned self] _ in
-                guard let textField = alert.textFields?.first,
-                      let updatedTaskName = textField.text else { return }
+                guard let updatedTaskTitle = alert.textFields?.first?.text, !updatedTaskTitle.isEmpty else { return }
                 
                 // Update the task name with new input
-                taskToEdit.title = updatedTaskName
+                taskToEdit.title = updatedTaskTitle
                 
                 // Update the row in the table view
                 let cellIndex = IndexPath(row: row, section: 0)
@@ -109,7 +108,6 @@ class TaskListViewController: UITableViewController {
                 StorageManager.shared.saveContext()
             }
             alert.addAction(saveAction)
-            
             
         }
         
