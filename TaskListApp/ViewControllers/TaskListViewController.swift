@@ -8,7 +8,7 @@
 import UIKit
 
 class TaskListViewController: UITableViewController {
-     
+    
     private var viewContext = StorageManager
         .shared
         .persistentContainer
@@ -54,7 +54,8 @@ class TaskListViewController: UITableViewController {
     
     @objc private func addNewTask() {
         showAlert(withTitle: "New Task",
-                  andMessage: "What do you want to do?")
+                  andMessage: "What do you want to do?",
+                  forRowAt: taskList.count - 1)
     }
     
     private func fetchData() {
@@ -67,25 +68,54 @@ class TaskListViewController: UITableViewController {
         }
     }
     
-    private func showAlert(withTitle title: String, andMessage message: String) {
+    private func showAlert(withTitle title: String,
+                           andMessage message: String,
+                           forRowAt row: Int) {
+        
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
         
-        let saveAction = UIAlertAction(title: "Save",
-                                       style: .default) { [unowned self] _ in
-            guard let task = alert.textFields?.first?.text, !task.isEmpty else { return }
-            save(task)
+        if message != "" {
+            alert.addTextField { textField in
+                textField.placeholder = "New Task"
+            }
+            
+            let saveAction = UIAlertAction(title: "Save",
+                                           style: .default) { [unowned self] _ in
+                guard let task = alert.textFields?.first?.text, !task.isEmpty else { return }
+                save(task)
+            }
+            alert.addAction(saveAction)
+        } else {
+            let taskToEdit = taskList[row]
+            alert.addTextField { textField in
+                textField.text = taskToEdit.title
+            }
+            
+            let saveAction = UIAlertAction(title: "Save",
+                                           style: .default) { [unowned self] _ in
+                guard let textField = alert.textFields?.first,
+                      let updatedTaskName = textField.text else { return }
+                
+                // Update the task name with new input
+                taskToEdit.title = updatedTaskName
+                
+                // Update the row in the table view
+                let cellIndex = IndexPath(row: row, section: 0)
+                tableView.reloadRows(at: [cellIndex], with: .automatic)
+                
+                // Save the changes to Core Data
+                StorageManager.shared.saveContext()
+            }
+            alert.addAction(saveAction)
+            
+            
         }
-        alert.addAction(saveAction)
         
         let cancelAction = UIAlertAction(title: "Cancel",
                                          style: .destructive)
         alert.addAction(cancelAction)
-        
-        alert.addTextField { textField in
-            textField.placeholder = "New Task"
-        }
         
         present(alert, animated: true)
     }
@@ -125,6 +155,7 @@ extension TaskListViewController {
         return cell
     }
     
+    // Delete the task (commit)
     override func tableView(_ tableView: UITableView,
                             commit editingStyle: UITableViewCell.EditingStyle,
                             forRowAt indexPath: IndexPath) {
@@ -144,4 +175,17 @@ extension TaskListViewController {
             
         }
     }
+    
+    // Override the tableView(_:didSelectRowAt:) method to handle editing
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // Deselect the row that was tapped
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        showAlert(withTitle: "Edit Task",
+                  andMessage: "",
+                  forRowAt: indexPath.row)
+        
+    }
+
 }
