@@ -8,8 +8,9 @@
 import UIKit
 
 class TaskListViewController: UITableViewController {
-    
-    private var viewContext = (UIApplication.shared.delegate as! AppDelegate)
+     
+    private var viewContext = StorageManager
+        .shared
         .persistentContainer
         .viewContext
     
@@ -89,7 +90,7 @@ class TaskListViewController: UITableViewController {
         present(alert, animated: true)
     }
     
-    private func save(_ taskName: String) {
+    func save(_ taskName: String) {
         let task = Task(context: viewContext)
         task.title = taskName
         taskList.append(task)
