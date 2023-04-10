@@ -132,11 +132,7 @@ class TaskListViewController: UITableViewController {
         tableView.insertRows(at: [cellIndex], with: .automatic)
         
         if viewContext.hasChanges {
-            do {
-                try viewContext.save()
-            } catch let error {
-                print(error.localizedDescription)
-            }
+            StorageManager.shared.saveContext()
         }
     }
     
